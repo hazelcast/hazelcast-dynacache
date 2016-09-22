@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="com.hazelcast.ibm.dynacache.CacheProviderImpl" immediate="true" >
+  <implementation class="com.hazelcast.ibm.dynacache.CacheProviderImpl"/>
+  <service>
+    <provide interface="com.ibm.wsspi.cache.CacheProvider"/>
+  </service>
+  <property name="name" type="String" value="hazelcast"/>
+  <property name="service.vendor" type="String" value="IBM"/>
+</component>
