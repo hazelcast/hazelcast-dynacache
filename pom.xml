@@ -22,6 +22,10 @@
     <version>0.1</version>
     <packaging>pom</packaging>
 
+    <properties>
+        <hazelcast.version>3.8-BUNDLE</hazelcast.version>
+    </properties>
+
     <modules>
         <module>hazelcast-dynacache-bundle</module>
         <module>hazelcast-dynacache</module>
@@ -37,6 +41,11 @@
                         <source>1.7</source>
                         <target>1.7</target>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>net.wasdev.wlp.maven.plugins</groupId>
+                    <artifactId>liberty-maven-plugin</artifactId>
+                    <version>1.2.1</version>
                 </plugin>
             </plugins>
         </pluginManagement>

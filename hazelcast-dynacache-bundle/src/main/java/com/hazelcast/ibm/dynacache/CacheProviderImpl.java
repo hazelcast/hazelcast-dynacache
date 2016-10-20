@@ -3,11 +3,14 @@ package com.hazelcast.ibm.dynacache;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.osgi.HazelcastClientOSGiService;
 import com.hazelcast.client.osgi.HazelcastOSGiClientInstance;
+import com.hazelcast.core.DistributedObjectEvent;
+import com.hazelcast.core.DistributedObjectListener;
 import com.ibm.wsspi.cache.CacheConfig;
 import com.ibm.wsspi.cache.CacheFeatureSupport;
 import com.ibm.wsspi.cache.CacheProvider;
 import com.ibm.wsspi.cache.CoreCache;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class CacheProviderImpl implements CacheProvider {
@@ -31,11 +34,15 @@ public class CacheProviderImpl implements CacheProvider {
 
     @Override
     public CoreCache createCache(CacheConfig cacheConfig) {
+        LOGGER.finest("[CacheProvider] Create Cache");
+
         LOGGER.finest("CacheName:" + cacheConfig.getCacheName());
         LOGGER.finest("MaxCacheSize: " + cacheConfig.getMaxCacheSize());
-        LOGGER.finest("Properties: " + cacheConfig.getProperties());
+        LOGGER.finest("<<<<< Printing out cacheConfig.getProperties() >>>>>");
+        for (Map.Entry<String, String> entry : cacheConfig.getProperties().entrySet()) {
+            LOGGER.finest(entry.getKey() + " : " + entry.getValue());
+        }
 
-        LOGGER.finest("[CacheProvider] Create Cache");
         ClientConfig config = new ClientConfig();
         config.setClassLoader(this.getClass().getClassLoader());
         LOGGER.finest("hazelcastClientOSGIService: " + hazelcastClientOSGIService);

@@ -35,7 +35,7 @@
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast-client</artifactId>
-            <version>3.8-SNAPSHOT</version>
+            <version>${hazelcast.version}</version>
         </dependency>
     </dependencies>
 
@@ -78,6 +78,10 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>net.wasdev.wlp.maven.plugins</groupId>
+                <artifactId>liberty-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

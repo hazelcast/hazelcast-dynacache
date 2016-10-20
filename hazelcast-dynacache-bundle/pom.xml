@@ -32,7 +32,7 @@
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast-client</artifactId>
-            <version>3.8-SNAPSHOT</version>
+            <version>${hazelcast.version}</version>
         </dependency>
         <dependency>
             <groupId>com.ibm.websphere.appserver.api</groupId>
@@ -75,12 +75,13 @@
                             com.hazelcast.ibm.dynacache
                         </Export-Package>
                         <Import-Package>
-                            com.hazelcast.client;version="3.8.0.SNAPSHOT",
-                            com.hazelcast.client.osgi;version="3.8.0.SNAPSHOT",
-                            com.hazelcast.client.config;version="3.8.0.SNAPSHOT",
-                            com.hazelcast.client.impl;version="3.8.0.SNAPSHOT",
-                            com.hazelcast.config;version="3.8.0.SNAPSHOT",
-                            com.hazelcast.core;version="3.8.0.SNAPSHOT",
+                            com.hazelcast.client;version="3.8.0.BUNDLE",
+                            com.hazelcast.client.osgi;version="3.8.0.BUNDLE",
+                            com.hazelcast.client.config;version="3.8.0.BUNDLE",
+                            com.hazelcast.client.impl;version="3.8.0.BUNDLE",
+                            com.hazelcast.config;version="3.8.0.BUNDLE",
+                            com.hazelcast.core;version="3.8.0.BUNDLE",
+                            com.hazelcast.map;version="3.8.0.BUNDLE",
                             com.ibm.websphere.cache;version="1.0.0",
                             com.ibm.wsspi.cache;version="1.1.0",
                             org.osgi.framework;version="1.8.0",
@@ -90,7 +91,7 @@
                             OSGI-INF/com.hazelcast.ibm.dynacache.CacheProviderImpl.xml
                         </Service-Component>
                         <Bundle-RequiredExecutionEnvironment>JavaSE-1.7</Bundle-RequiredExecutionEnvironment>
-                        <Application-Content>com.hazelcast.client;version="[3.8.0.SNAPSHOT,3.8.0.SNAPSHOT]"</Application-Content>
+                        <Application-Content>com.hazelcast.client;version="[3.8.0.BUNDLE,3.8.0.BUNDLE]"</Application-Content>
                     </instructions>
                 </configuration>
             </plugin>

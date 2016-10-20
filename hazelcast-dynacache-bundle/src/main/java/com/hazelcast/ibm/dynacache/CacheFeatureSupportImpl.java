@@ -25,6 +25,6 @@ public class CacheFeatureSupportImpl extends CacheFeatureSupport {
     public boolean isReplicationSupported() {
         LOGGER.finest("[CacheFeatureSupport] isReplicationSupported");
 
-        return false;
+        return true;
     }
 }
