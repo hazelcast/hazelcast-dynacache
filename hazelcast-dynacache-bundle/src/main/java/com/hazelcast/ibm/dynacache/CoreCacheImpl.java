@@ -19,11 +19,14 @@ public class CoreCacheImpl implements CoreCache {
     private final String cacheName;
     private final IMap<Object, Object> cache;
     private final MultiMap<Object, Object> dependencyIds;
+    private final MultiMap<Object, Object> templateIds;
 
     public CoreCacheImpl(String cacheName, HazelcastOSGiClientInstance hazelcastInstance) {
         this.cacheName = cacheName;
+
         this.cache = hazelcastInstance.getMap(cacheName);
-        this.dependencyIds = hazelcastInstance.getMultiMap(cacheName);
+        this.dependencyIds = hazelcastInstance.getMultiMap(cacheName + "-dep");
+        this.templateIds = hazelcastInstance.getMultiMap(cacheName + "-template");
     }
 
     @Override
@@ -32,6 +35,7 @@ public class CoreCacheImpl implements CoreCache {
 
         cache.clear();
         dependencyIds.clear();
+        templateIds.clear();
     }
 
     @Override
@@ -60,7 +64,6 @@ public class CoreCacheImpl implements CoreCache {
         LOGGER.finest("[CoreCache] getCacheIds(keyword)");
 
         throw new UnsupportedOperationException();
-
     }
 
     @Override
@@ -89,7 +92,7 @@ public class CoreCacheImpl implements CoreCache {
     public Set<Object> getTemplateIds() {
         LOGGER.finest("[CoreCache] getTemplateIds");
 
-        throw new UnsupportedOperationException();
+        return templateIds.keySet();
     }
 
     @Override
@@ -114,6 +117,12 @@ public class CoreCacheImpl implements CoreCache {
             Object dependencyId = dataIds.nextElement();
             dependencyIds.remove(dependencyId, id);
         }
+
+        Enumeration templates = removedEntry.getTemplates();
+        while (templates.hasMoreElements()) {
+            Object templateId = templates.nextElement();
+            templateIds.remove(templateId, id);
+        }
     }
 
     @Override
@@ -128,7 +137,8 @@ public class CoreCacheImpl implements CoreCache {
     public void invalidateByTemplate(String template, boolean waitOnInvalidation) {
         LOGGER.finest("[CoreCache] invalidateByTemplate");
 
-        throw new UnsupportedOperationException();
+        Set<Object> ids = (Set<Object>) templateIds.remove(template);
+        cache.executeOnKeys(ids, new DeleteEntryProcessor());
     }
 
     @Override
@@ -145,6 +155,12 @@ public class CoreCacheImpl implements CoreCache {
         while (dataIds.hasMoreElements()) {
             Object dependencyId = dataIds.nextElement();
             dependencyIds.put(dependencyId, id);
+        }
+
+        Enumeration templates = ei.getTemplates();
+        while (templates.hasMoreElements()) {
+            Object templateId = templates.nextElement();
+            templateIds.put(templateId, id);
         }
 
         return cacheEntry;
