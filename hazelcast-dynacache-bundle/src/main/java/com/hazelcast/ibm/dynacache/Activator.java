@@ -9,7 +9,7 @@ public class Activator implements BundleActivator {
     private static Logger LOGGER = Logger.getLogger(Activator.class.getName());
 
     static {
-        System.setProperty("hazelcast.osgi.start", "true");
+        System.setProperty("hazelcast.osgi.start", "false");
     }
 
     public void start(BundleContext context) throws Exception {

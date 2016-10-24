@@ -1,15 +1,15 @@
 package com.hazelcast.ibm.dynacache;
 
 import com.hazelcast.client.config.ClientConfig;
+import com.hazelcast.client.config.XmlClientConfigBuilder;
 import com.hazelcast.client.osgi.HazelcastClientOSGiService;
 import com.hazelcast.client.osgi.HazelcastOSGiClientInstance;
-import com.hazelcast.core.DistributedObjectEvent;
-import com.hazelcast.core.DistributedObjectListener;
 import com.ibm.wsspi.cache.CacheConfig;
 import com.ibm.wsspi.cache.CacheFeatureSupport;
 import com.ibm.wsspi.cache.CacheProvider;
 import com.ibm.wsspi.cache.CoreCache;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -43,8 +43,28 @@ public class CacheProviderImpl implements CacheProvider {
             LOGGER.finest(entry.getKey() + " : " + entry.getValue());
         }
 
-        ClientConfig config = new ClientConfig();
+        String clientConfigLocation = System.getProperty("hazelcast.client.config");
+
+        LOGGER.finest("Hazelcast client config location: " + clientConfigLocation);
+
+        ClientConfig config;
+        if (clientConfigLocation != null) {
+            try {
+                XmlClientConfigBuilder xmlClientConfigBuilder =
+                        new XmlClientConfigBuilder(clientConfigLocation);
+                config = xmlClientConfigBuilder.build();
+
+                LOGGER.finest("Configured Hazelcast client using config file at [" + clientConfigLocation + "]");
+            } catch (IOException e) {
+                throw new RuntimeException("Failed to configure Hazelcast client using config file at [" +
+                        clientConfigLocation + "]", e);
+            }
+        } else {
+            config = new ClientConfig();
+        }
+
         config.setClassLoader(this.getClass().getClassLoader());
+
         LOGGER.finest("hazelcastClientOSGIService: " + hazelcastClientOSGIService);
 
         HazelcastOSGiClientInstance hazelcastClientInstance = hazelcastClientOSGIService.newHazelcastInstance(config);
