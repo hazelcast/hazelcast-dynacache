@@ -112,16 +112,18 @@ public class CoreCacheImpl implements CoreCache {
     private void invalidate(Object id) {
         CacheEntry removedEntry = (CacheEntry) cache.remove(id);
 
-        Enumeration dataIds = removedEntry.getDataIds();
-        while (dataIds.hasMoreElements()) {
-            Object dependencyId = dataIds.nextElement();
-            dependencyIds.remove(dependencyId, id);
-        }
+        if (removedEntry != null) {
+            Enumeration dataIds = removedEntry.getDataIds();
+            while (dataIds.hasMoreElements()) {
+                Object dependencyId = dataIds.nextElement();
+                dependencyIds.remove(dependencyId, id);
+            }
 
-        Enumeration templates = removedEntry.getTemplates();
-        while (templates.hasMoreElements()) {
-            Object templateId = templates.nextElement();
-            templateIds.remove(templateId, id);
+            Enumeration templates = removedEntry.getTemplates();
+            while (templates.hasMoreElements()) {
+                Object templateId = templates.nextElement();
+                templateIds.remove(templateId, id);
+            }
         }
     }
 
