@@ -9,6 +9,7 @@ import com.ibm.wsspi.cache.CacheStatistics;
 import com.ibm.wsspi.cache.CoreCache;
 import com.ibm.wsspi.cache.EventSource;
 
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -100,6 +101,8 @@ public class CoreCacheImpl implements CoreCache {
         LOGGER.finest("[CoreCache] invalidate: " + id + " " + waitOnInvalidation);
 
         invalidate(id);
+        invalidateByDependency(id, waitOnInvalidation);
+        invalidateByTemplate(id.toString(), waitOnInvalidation);
     }
 
     @Override
@@ -129,18 +132,22 @@ public class CoreCacheImpl implements CoreCache {
 
     @Override
     public void invalidateByDependency(Object dependency, boolean waitOnInvalidation) {
-        LOGGER.finest("[CoreCache] invalidateByDependency");
+        LOGGER.finest("[CoreCache] invalidateByDependency(" + dependency + "," + waitOnInvalidation + ")");
 
-        Set<Object> ids = (Set<Object>) dependencyIds.remove(dependency);
-        cache.executeOnKeys(ids, new DeleteEntryProcessor());
+        Collection<Object> ids = dependencyIds.remove(dependency);
+        for (Object id : ids) {
+            cache.delete(id);
+        }
     }
 
     @Override
     public void invalidateByTemplate(String template, boolean waitOnInvalidation) {
-        LOGGER.finest("[CoreCache] invalidateByTemplate");
+        LOGGER.finest("[CoreCache] invalidateByTemplate(" + template + "," + waitOnInvalidation + ")");
 
-        Set<Object> ids = (Set<Object>) templateIds.remove(template);
-        cache.executeOnKeys(ids, new DeleteEntryProcessor());
+        Collection<Object> ids = templateIds.remove(template);
+        for (Object id : ids) {
+            cache.delete(id);
+        }
     }
 
     @Override
