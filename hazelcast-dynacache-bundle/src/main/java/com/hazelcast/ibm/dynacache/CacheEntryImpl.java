@@ -169,7 +169,7 @@ public class CacheEntryImpl implements CacheEntry, Serializable {
 	public boolean prepareForSerialization() {
 		LOGGER.finest("[CacheEntry] prepareForSerialization");
 
-        return false;
+        return true;
 	}
 
 	@Override

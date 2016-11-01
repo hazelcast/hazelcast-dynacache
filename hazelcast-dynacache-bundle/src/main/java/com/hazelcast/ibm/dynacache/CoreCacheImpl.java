@@ -1,6 +1,6 @@
 package com.hazelcast.ibm.dynacache;
 
-import com.hazelcast.client.osgi.HazelcastOSGiClientInstance;
+import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.hazelcast.core.MultiMap;
 import com.ibm.websphere.cache.CacheEntry;
@@ -22,7 +22,7 @@ public class CoreCacheImpl implements CoreCache {
     private final MultiMap<Object, Object> dependencyIds;
     private final MultiMap<Object, Object> templateIds;
 
-    public CoreCacheImpl(String cacheName, HazelcastOSGiClientInstance hazelcastInstance) {
+    public CoreCacheImpl(String cacheName, HazelcastInstance hazelcastInstance) {
         this.cacheName = cacheName;
 
         this.cache = hazelcastInstance.getMap(cacheName);
@@ -100,7 +100,7 @@ public class CoreCacheImpl implements CoreCache {
     public void invalidate(Object id, boolean waitOnInvalidation) {
         LOGGER.finest("[CoreCache] invalidate: " + id + " " + waitOnInvalidation);
 
-        invalidate(id);
+        doInvalidate(id, waitOnInvalidation);
         invalidateByDependency(id, waitOnInvalidation);
         invalidateByTemplate(id.toString(), waitOnInvalidation);
     }
@@ -109,10 +109,10 @@ public class CoreCacheImpl implements CoreCache {
     public void invalidateByCacheId(Object cacheId, boolean waitOnInvalidation) {
         LOGGER.finest("[CoreCache] invalidate(cacheId): " + cacheId + ":" + waitOnInvalidation);
 
-        invalidate(cacheId);
+        doInvalidate(cacheId, waitOnInvalidation);
     }
 
-    private void invalidate(Object id) {
+    private void doInvalidate(Object id, boolean waitOnInvalidation) {
         CacheEntry removedEntry = (CacheEntry) cache.remove(id);
 
         if (removedEntry != null) {

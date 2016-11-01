@@ -1,9 +1,10 @@
 package com.hazelcast.ibm.dynacache;
 
+import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.config.XmlClientConfigBuilder;
 import com.hazelcast.client.osgi.HazelcastClientOSGiService;
-import com.hazelcast.client.osgi.HazelcastOSGiClientInstance;
+import com.hazelcast.core.HazelcastInstance;
 import com.ibm.wsspi.cache.CacheConfig;
 import com.ibm.wsspi.cache.CacheFeatureSupport;
 import com.ibm.wsspi.cache.CacheProvider;
@@ -67,7 +68,12 @@ public class CacheProviderImpl implements CacheProvider {
 
         LOGGER.finest("hazelcastClientOSGIService: " + hazelcastClientOSGIService);
 
-        HazelcastOSGiClientInstance hazelcastClientInstance = hazelcastClientOSGIService.newHazelcastInstance(config);
+        HazelcastInstance hazelcastClientInstance;
+        if (hazelcastClientOSGIService != null) {
+            hazelcastClientInstance = hazelcastClientOSGIService.newHazelcastInstance(config);
+        } else {
+            hazelcastClientInstance = HazelcastClient.newHazelcastClient(config);
+        }
 
         LOGGER.finest("HazelcastClientInstance: " + hazelcastClientInstance);
 
