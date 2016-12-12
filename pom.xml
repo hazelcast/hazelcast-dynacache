@@ -19,7 +19,7 @@
 
     <groupId>com.hazelcast</groupId>
     <artifactId>hazelcast-dynacache-root</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
     <packaging>pom</packaging>
 
     <properties>
