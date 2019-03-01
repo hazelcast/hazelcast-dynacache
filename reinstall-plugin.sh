@@ -9,4 +9,4 @@ else
 fi
 
 ${LIBERTY_HOME}/bin/featureManager uninstall hazelcast-dynacache --noPrompts
-${LIBERTY_HOME}/bin/featureManager install hazelcast-dynacache/target/hazelcast-dynacache-0.2.esa
+${LIBERTY_HOME}/bin/featureManager install hazelcast-dynacache/target/hazelcast-dynacache-0.3.esa

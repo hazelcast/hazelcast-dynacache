@@ -19,11 +19,11 @@
 
     <groupId>com.hazelcast</groupId>
     <artifactId>hazelcast-dynacache-root</artifactId>
-    <version>0.2</version>
+    <version>0.3</version>
     <packaging>pom</packaging>
 
     <properties>
-        <hazelcast.version>3.8-BUNDLE</hazelcast.version>
+        <hazelcast.version>3.11</hazelcast.version>
     </properties>
 
     <modules>
