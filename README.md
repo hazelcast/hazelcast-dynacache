@@ -13,6 +13,8 @@ This repository contains Hazelcast DynaCache feature for Liberty Profile.
 In Liberty WAS, you can use dynamic cache engine (which is the default) in order to cache your data.
 With this feature, you can use Hazelcast as cache provider.
 
+Tested with Liberty 16.0.0.3.
+
 # Requirements
     
 - Maven
