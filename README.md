@@ -13,25 +13,14 @@ This repository contains Hazelcast DynaCache feature for Liberty Profile.
 In Liberty WAS, you can use dynamic cache engine (which is the default) in order to cache your data.
 With this feature, you can use Hazelcast as cache provider.
 
+Tested with Liberty 16.0.0.3.
+
 # Requirements
     
 - Maven
 - Download and extract [Liberty 16.0.0.3](https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/wasdev/downloads/wlp/16.0.0.3/wlp-javaee7-16.0.0.3.zip)
 
 # Creating Development Environment
-
-- Clone `bundle` branch of the modified version of Hazelcast library:
- 
-    ```
-    git clone -b bundle https://github.com/emre-aydin/hazelcast.git
-    ```
-
-- Install the modified version of Hazelcast into local Maven repository. Execute the following in `hazelcast` 
-project root directory:
-
-    ```
-    mvn clean install -DskipTests=true
-    ```
 
 - Clone this GitHub repository: 
 
@@ -46,7 +35,7 @@ project root directory:
 Install the `.esa` file by executing the following command:
 
 ```
-<liberty dir>/bin/featureManager install hazelcast-dynacache/hazelcast-dynacache/target/hazelcast-dynacache-0.2.esa
+<liberty dir>/bin/featureManager install hazelcast-dynacache/hazelcast-dynacache/target/hazelcast-dynacache-0.3.esa
 ```    
 
 Use `hazelcast` as your cache provider name in your `cacheinstances.properties` file.
@@ -68,8 +57,7 @@ Enable Hazelcast DynaCache by adding the following snippet to your `server.xml` 
 [Apply the iFix](http://www.ibm.com/support/knowledgecenter/SS7K4U_8.5.5/com.ibm.websphere.installation.nd.doc/ae/tins_install_fixes_dist.html)
  under `twas-ifix` directory to your WebSphere server and put the following files under `WAS_HOME/lib/ext`:
 
-* hazelcast-3.8-BUNDLE.jar
-* hazelcast-client-3.8-BUNDLE.jar
-* hazelcast-dynacache-bundle-0.2.jar
+* hazelcast-all-3.11.jar
+* hazelcast-dynacache-bundle-0.3.jar
 
 Use `com.hazelcast.ibm.dynacache.CacheProviderImpl` as your cache provider name in your `cacheinstances.properties` file.

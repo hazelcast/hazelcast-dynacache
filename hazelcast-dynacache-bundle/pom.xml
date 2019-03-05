@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2008-2016, Hazelcast, Inc. All Rights Reserved.
+  ~ Copyright (c) 2008-2019, Hazelcast, Inc. All Rights Reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
     <parent>
         <groupId>com.hazelcast</groupId>
         <artifactId>hazelcast-dynacache-root</artifactId>
-        <version>0.2</version>
+        <version>0.3</version>
     </parent>
 
     <artifactId>hazelcast-dynacache-bundle</artifactId>
@@ -31,7 +31,7 @@
     <dependencies>
         <dependency>
             <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast-client</artifactId>
+            <artifactId>hazelcast-all</artifactId>
             <version>${hazelcast.version}</version>
         </dependency>
         <dependency>
@@ -70,18 +70,13 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Bundle-Activator>com.hazelcast.ibm.dynacache.Activator</Bundle-Activator>
+                        <Bundle-Activator>com.hazelcast.client.osgi.Activator</Bundle-Activator>
                         <Export-Package>
-                            com.hazelcast.ibm.dynacache
+                            com.hazelcast.ibm.dynacache,
+                            com.hazelcast.client.osgi
                         </Export-Package>
                         <Import-Package>
-                            com.hazelcast.client;version="3.8.0.BUNDLE",
-                            com.hazelcast.client.osgi;version="3.8.0.BUNDLE",
-                            com.hazelcast.client.config;version="3.8.0.BUNDLE",
-                            com.hazelcast.client.impl;version="3.8.0.BUNDLE",
-                            com.hazelcast.config;version="3.8.0.BUNDLE",
-                            com.hazelcast.core;version="3.8.0.BUNDLE",
-                            com.hazelcast.map;version="3.8.0.BUNDLE",
+                            com.hazelcast.*;version="3.11.0",
                             com.ibm.websphere.cache;version="1.0.0",
                             com.ibm.wsspi.cache;version="1.1.0",
                             org.osgi.framework;version="1.8.0",
@@ -91,7 +86,6 @@
                             OSGI-INF/com.hazelcast.ibm.dynacache.CacheProviderImpl.xml
                         </Service-Component>
                         <Bundle-RequiredExecutionEnvironment>JavaSE-1.7</Bundle-RequiredExecutionEnvironment>
-                        <Application-Content>com.hazelcast.client;version="[3.8.0.BUNDLE,3.8.0.BUNDLE]"</Application-Content>
                     </instructions>
                 </configuration>
             </plugin>

@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (c) 2008-2016, Hazelcast, Inc. All Rights Reserved.
+  ~ Copyright (c) 2008-2019, Hazelcast, Inc. All Rights Reserved.
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
     <parent>
         <groupId>com.hazelcast</groupId>
         <artifactId>hazelcast-dynacache-root</artifactId>
-        <version>0.2</version>
+        <version>0.3</version>
     </parent>
 
     <artifactId>hazelcast-dynacache</artifactId>
@@ -30,12 +30,7 @@
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>hazelcast-dynacache-bundle</artifactId>
-            <version>0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast-client</artifactId>
-            <version>${hazelcast.version}</version>
+            <version>0.3</version>
         </dependency>
     </dependencies>
 
@@ -69,7 +64,7 @@
 
                         <configuration>
                             <target>
-                                <move file="${project.build.directory}/${project.artifactId}-${project.version}-esa.zip"
+                                <copy file="${project.build.directory}/${project.artifactId}-${project.version}-esa.zip"
                                       tofile="${project.build.directory}/${project.artifactId}-${project.version}.esa" />
                             </target>
                         </configuration>
