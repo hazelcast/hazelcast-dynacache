@@ -17,36 +17,30 @@ package com.hazelcast.client.osgi;
 
 import com.hazelcast.cardinality.CardinalityEstimator;
 import com.hazelcast.config.Config;
-import com.hazelcast.core.ClientService;
-import com.hazelcast.core.Cluster;
+import com.hazelcast.client.ClientService;
+import com.hazelcast.cluster.Cluster;
 import com.hazelcast.core.DistributedObject;
 import com.hazelcast.core.DistributedObjectListener;
-import com.hazelcast.core.Endpoint;
+import com.hazelcast.cluster.Endpoint;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IAtomicLong;
-import com.hazelcast.core.IAtomicReference;
+import com.hazelcast.cp.CPSubsystem;
 import com.hazelcast.core.ICacheManager;
-import com.hazelcast.core.ICountDownLatch;
 import com.hazelcast.core.IExecutorService;
-import com.hazelcast.core.IList;
-import com.hazelcast.core.ILock;
-import com.hazelcast.core.IMap;
-import com.hazelcast.core.IQueue;
-import com.hazelcast.core.ISemaphore;
-import com.hazelcast.core.ISet;
-import com.hazelcast.core.ITopic;
-import com.hazelcast.core.IdGenerator;
+import com.hazelcast.collection.IList;
+import com.hazelcast.map.IMap;
+import com.hazelcast.collection.IQueue;
+import com.hazelcast.collection.ISet;
+import com.hazelcast.splitbrainprotection.SplitBrainProtectionService;
+import com.hazelcast.topic.ITopic;
 import com.hazelcast.core.LifecycleService;
-import com.hazelcast.core.MultiMap;
-import com.hazelcast.core.PartitionService;
-import com.hazelcast.core.ReplicatedMap;
+import com.hazelcast.multimap.MultiMap;
+import com.hazelcast.partition.PartitionService;
+import com.hazelcast.replicatedmap.ReplicatedMap;
 import com.hazelcast.crdt.pncounter.PNCounter;
 import com.hazelcast.durableexecutor.DurableExecutorService;
 import com.hazelcast.flakeidgen.FlakeIdGenerator;
 import com.hazelcast.logging.LoggingService;
-import com.hazelcast.mapreduce.JobTracker;
 import com.hazelcast.osgi.HazelcastOSGiInstance;
-import com.hazelcast.quorum.QuorumService;
 import com.hazelcast.ringbuffer.Ringbuffer;
 import com.hazelcast.scheduledexecutor.IScheduledExecutorService;
 import com.hazelcast.transaction.HazelcastXAResource;
@@ -56,6 +50,7 @@ import com.hazelcast.transaction.TransactionOptions;
 import com.hazelcast.transaction.TransactionalTask;
 
 import java.util.Collection;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentMap;
 
 /**
@@ -110,18 +105,8 @@ class HazelcastOSGiClientInstanceImpl
     }
 
     @Override
-    public JobTracker getJobTracker(String name) {
-        return delegatedInstance.getJobTracker(name);
-    }
-
-    @Override
     public <K, V> MultiMap<K, V> getMultiMap(String name) {
         return delegatedInstance.getMultiMap(name);
-    }
-
-    @Override
-    public ILock getLock(String key) {
-        return delegatedInstance.getLock(key);
     }
 
     @Override
@@ -152,6 +137,11 @@ class HazelcastOSGiClientInstanceImpl
     @Override
     public IScheduledExecutorService getScheduledExecutorService(String name) {
         return delegatedInstance.getScheduledExecutorService(name);
+    }
+
+    @Override
+    public CPSubsystem getCPSubsystem() {
+        return null;
     }
 
     @Override
@@ -195,33 +185,8 @@ class HazelcastOSGiClientInstanceImpl
     }
 
     @Override
-    public IdGenerator getIdGenerator(String name) {
-        return delegatedInstance.getIdGenerator(name);
-    }
-
-    @Override
     public FlakeIdGenerator getFlakeIdGenerator(String name) {
         return delegatedInstance.getFlakeIdGenerator(name);
-    }
-
-    @Override
-    public IAtomicLong getAtomicLong(String name) {
-        return delegatedInstance.getAtomicLong(name);
-    }
-
-    @Override
-    public <E> IAtomicReference<E> getAtomicReference(String name) {
-        return delegatedInstance.getAtomicReference(name);
-    }
-
-    @Override
-    public ICountDownLatch getCountDownLatch(String name) {
-        return delegatedInstance.getCountDownLatch(name);
-    }
-
-    @Override
-    public ISemaphore getSemaphore(String name) {
-        return delegatedInstance.getSemaphore(name);
     }
 
     @Override
@@ -230,12 +195,12 @@ class HazelcastOSGiClientInstanceImpl
     }
 
     @Override
-    public String addDistributedObjectListener(DistributedObjectListener distributedObjectListener) {
+    public UUID addDistributedObjectListener(DistributedObjectListener distributedObjectListener) {
         return delegatedInstance.addDistributedObjectListener(distributedObjectListener);
     }
 
     @Override
-    public boolean removeDistributedObjectListener(String registrationId) {
+    public boolean removeDistributedObjectListener(UUID registrationId) {
         return delegatedInstance.removeDistributedObjectListener(registrationId);
     }
 
@@ -250,8 +215,8 @@ class HazelcastOSGiClientInstanceImpl
     }
 
     @Override
-    public QuorumService getQuorumService() {
-        return delegatedInstance.getQuorumService();
+    public SplitBrainProtectionService getSplitBrainProtectionService() {
+        return delegatedInstance.getSplitBrainProtectionService();
     }
 
     @Override

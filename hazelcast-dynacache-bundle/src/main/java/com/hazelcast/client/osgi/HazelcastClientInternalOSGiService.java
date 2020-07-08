@@ -38,7 +38,7 @@ public interface HazelcastClientInternalOSGiService
      * Default group name to be used when grouping is not disabled with
      * {@link HazelcastOSGiService#HAZELCAST_OSGI_GROUPING_DISABLED}.
      */
-    String DEFAULT_GROUP_NAME = DEFAULT_ID;
+    String DEFAULT_CLUSTER_NAME = DEFAULT_ID;
 
     /**
      * Returns the state of the service about if it is active or not.

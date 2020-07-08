@@ -16,8 +16,8 @@
 package com.hazelcast.ibm.dynacache;
 
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import com.hazelcast.core.MultiMap;
+import com.hazelcast.map.IMap;
+import com.hazelcast.multimap.MultiMap;
 import com.ibm.websphere.cache.CacheEntry;
 import com.ibm.websphere.cache.EntryInfo;
 import com.ibm.wsspi.cache.CacheStatistics;
