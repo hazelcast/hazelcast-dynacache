@@ -20,7 +20,7 @@
     <parent>
         <groupId>com.hazelcast</groupId>
         <artifactId>hazelcast-dynacache-root</artifactId>
-        <version>0.4</version>
+        <version>0.5</version>
     </parent>
 
     <artifactId>hazelcast-dynacache-bundle</artifactId>
@@ -30,7 +30,7 @@
     <dependencies>
         <dependency>
             <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast-all</artifactId>
+            <artifactId>hazelcast-enterprise</artifactId>
             <version>${hazelcast.version}</version>
         </dependency>
         <dependency>
