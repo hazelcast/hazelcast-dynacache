@@ -13,12 +13,12 @@ This repository contains Hazelcast DynaCache feature for Liberty Profile.
 In Liberty WAS, you can use dynamic cache engine (which is the default) in order to cache your data.
 With this feature, you can use Hazelcast as cache provider.
 
-Tested with Liberty 16.0.0.3.
+Tested with Liberty 20.0.0.7.
 
 # Requirements
     
 - Maven
-- Download and extract [Liberty 16.0.0.3](https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/wasdev/downloads/wlp/16.0.0.3/wlp-javaee7-16.0.0.3.zip)
+- Download and extract [Liberty 20.0.0.7](https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/wasdev/downloads/wlp/20.0.0.7/wlp-javaee8-20.0.0.7.zip)
 
 # Creating Development Environment
 
@@ -35,7 +35,7 @@ Tested with Liberty 16.0.0.3.
 Install the `.esa` file by executing the following command:
 
 ```
-<liberty dir>/bin/featureManager install hazelcast-dynacache/hazelcast-dynacache/target/hazelcast-dynacache-0.3.esa
+<liberty dir>/bin/featureManager install hazelcast-dynacache/hazelcast-dynacache/target/hazelcast-dynacache-0.5.esa
 ```    
 
 Use `hazelcast` as your cache provider name in your `cacheinstances.properties` file.
