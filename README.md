@@ -43,14 +43,19 @@ git clone https://github.com/hazelcast/hazelcast-dynacache.git
 ```
 
 - Run `mvn clean verify` from the repository root to run the tests and create
-  `hazelcast-dynacache/target/hazelcast-dynacache-0.3.esa`.
+  `hazelcast-dynacache/target/hazelcast-dynacache-0.4.esa`.
+
+To release, open **Actions → Release → Run workflow** and select `master`.
+The workflow tests that commit, creates a tag from the Maven version, and attaches
+the ESA to the GitHub release. For subsequent releases, update the Maven version
+and the DynaCache bundle version in `hazelcast-dynacache/src/main/resources/OSGI-INF/SUBSYSTEM.MF`.
 
 # Installing Hazelcast DynaCache on Liberty
 
 On WebSphere Liberty, run the following from the repository root.
 
 ```sh
-<liberty dir>/bin/featureManager install hazelcast-dynacache/target/hazelcast-dynacache-0.3.esa
+<liberty dir>/bin/featureManager install hazelcast-dynacache/target/hazelcast-dynacache-0.4.esa
 ```
 
 For a manual installation, extract the JARs from the ESA into `<liberty user dir>/extension/lib`.

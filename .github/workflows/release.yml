@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency: release
+
+jobs:
+  release:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Build and test
+        run: mvn --batch-mode --no-transfer-progress clean verify
+
+      - name: Publish the Liberty feature
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          shopt -s nullglob
+          assets=(hazelcast-dynacache/target/hazelcast-dynacache-*.esa)
+          if [[ ${#assets[@]} -ne 1 || ! -s "${assets[0]}" ]]; then
+            echo "Expected one nonempty Liberty ESA from the Maven build." >&2
+            exit 1
+          fi
+
+          filename="${assets[0]##*/}"
+          version="${filename#hazelcast-dynacache-}"
+          tag="v${version%.esa}"
+          if git ls-remote --exit-code --refs origin "refs/tags/$tag"; then
+            echo "Tag $tag already exists. Update the Maven version before releasing again." >&2
+            exit 1
+          elif [[ $? -ne 2 ]]; then
+            echo "Could not check whether $tag already exists." >&2
+            exit 1
+          fi
+          gh release create "$tag" "${assets[0]}" --target "$GITHUB_SHA" --generate-notes
