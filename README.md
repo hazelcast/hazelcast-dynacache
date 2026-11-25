@@ -32,15 +32,15 @@ The Liberty feature uses the IBM Distributed Map API and can run alongside Jakar
 - Maven
 - Java 17 or later
 - A Liberty runtime with the Distributed Map and Jakarta Transactions features available
-- A Hazelcast 5.7 cluster. The build uses Hazelcast 5.7.0 by default.
+- A Hazelcast 5.7 cluster. 
 
 # Creating Development Environment
 
 - Clone this GitHub repository: 
 
-    ```
-    git clone https://github.com/hazelcast/hazelcast-dynacache.git
-    ```
+```bash
+git clone https://github.com/hazelcast/hazelcast-dynacache.git
+```
 
 - Run `mvn clean verify` from the repository root to run the tests and create
   `hazelcast-dynacache/target/hazelcast-dynacache-0.3.esa`.
@@ -62,11 +62,11 @@ The Liberty user directory defaults to `<liberty dir>/usr`.
 
 Enable the feature in `server.xml` and select the provider for your distributed map.
 
- ```
-  <featureManager>
+ ```xml
+<featureManager>
     <feature>usr:hazelcast-dynacache</feature>
-  </featureManager>
-  <distributedMap id="my-cache" jndiName="services/cache/my-cache" cacheProviderName="hazelcast"/>
+</featureManager>
+<distributedMap id="my-cache" jndiName="services/cache/my-cache" cacheProviderName="hazelcast"/>
  ```
 Set `-Dhazelcast.client.config=/path/to/hazelcast-client.xml` in the server's `jvm.options`
 to configure the cluster name and member addresses.
