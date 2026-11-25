@@ -30,20 +30,13 @@
     <dependencies>
         <dependency>
             <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast-all</artifactId>
+            <artifactId>hazelcast</artifactId>
             <version>${hazelcast.version}</version>
         </dependency>
         <dependency>
             <groupId>com.ibm.websphere.appserver.api</groupId>
-            <artifactId>com.ibm.websphere.appserver.api.basics</artifactId>
-            <version>1.2.9</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.ibm.tools.target</groupId>
-            <artifactId>was-liberty</artifactId>
-            <version>8.5.x.6</version>
-            <type>pom</type>
+            <artifactId>com.ibm.websphere.appserver.api.distributedMap</artifactId>
+            <version>2.0.119</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -53,10 +46,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.enterprise</artifactId>
-            <version>5.0.0</version>
-            <scope>provided</scope>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -65,26 +58,25 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                <version>2.3.7</version>
+                <version>5.1.9</version>
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
                         <Bundle-Activator>com.hazelcast.client.osgi.Activator</Bundle-Activator>
                         <Export-Package>
-                            com.hazelcast.ibm.dynacache,
-                            com.hazelcast.client.osgi
+                            com.hazelcast.ibm.dynacache;-noimport:=true,
+                            com.hazelcast.client.osgi;-noimport:=true
                         </Export-Package>
                         <Import-Package>
-                            com.hazelcast.*;version="3.11.0",
+                            com.hazelcast.*;version="[5.7,6)",
                             com.ibm.websphere.cache;version="1.0.0",
                             com.ibm.wsspi.cache;version="1.1.0",
-                            org.osgi.framework;version="1.8.0",
-                            org.osgi.service.component.annotations;version="1.3.0"
+                            org.osgi.framework;version="1.8.0"
                         </Import-Package>
                         <Service-Component>
                             OSGI-INF/com.hazelcast.ibm.dynacache.CacheProviderImpl.xml
                         </Service-Component>
-                        <Bundle-RequiredExecutionEnvironment>JavaSE-1.7</Bundle-RequiredExecutionEnvironment>
+                        <Bundle-RequiredExecutionEnvironment>JavaSE-17</Bundle-RequiredExecutionEnvironment>
                     </instructions>
                 </configuration>
             </plugin>

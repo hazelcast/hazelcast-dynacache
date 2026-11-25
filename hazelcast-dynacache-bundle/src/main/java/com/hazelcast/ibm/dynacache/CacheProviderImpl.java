@@ -26,7 +26,6 @@ import com.ibm.wsspi.cache.CacheProvider;
 import com.ibm.wsspi.cache.CoreCache;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.logging.Logger;
 
 public class CacheProviderImpl implements CacheProvider {
@@ -54,11 +53,6 @@ public class CacheProviderImpl implements CacheProvider {
 
         LOGGER.finest("CacheName:" + cacheConfig.getCacheName());
         LOGGER.finest("MaxCacheSize: " + cacheConfig.getMaxCacheSize());
-        LOGGER.finest("<<<<< Printing out cacheConfig.getProperties() >>>>>");
-        for (Map.Entry<String, String> entry : cacheConfig.getProperties().entrySet()) {
-            LOGGER.finest(entry.getKey() + " : " + entry.getValue());
-        }
-
         String clientConfigLocation = System.getProperty("hazelcast.client.config");
 
         LOGGER.finest("Hazelcast client config location: " + clientConfigLocation);
