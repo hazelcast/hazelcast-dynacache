@@ -22,7 +22,8 @@
     <packaging>pom</packaging>
 
     <properties>
-        <hazelcast.version>3.11</hazelcast.version>
+        <hazelcast.version>5.7.0</hazelcast.version>
+        <maven.compiler.release>17</maven.compiler.release>
     </properties>
 
     <modules>
@@ -35,25 +36,20 @@
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>1.7</source>
-                        <target>1.7</target>
-                    </configuration>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.5.4</version>
                 </plugin>
                 <plugin>
-                    <groupId>net.wasdev.wlp.maven.plugins</groupId>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.13.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>io.openliberty.tools</groupId>
                     <artifactId>liberty-maven-plugin</artifactId>
-                    <version>1.2.1</version>
+                    <version>3.10.2</version>
                 </plugin>
             </plugins>
         </pluginManagement>
     </build>
-
-    <repositories>
-        <repository>
-            <id>wasdev</id>
-            <url>http://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/wasdev/maven/repository/</url>
-        </repository>
-    </repositories>
 </project>

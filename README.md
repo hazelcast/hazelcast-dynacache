@@ -15,7 +15,7 @@
 * [Hazelcast DynaCache](#hazelcast-dynacache)
 * [Requirements](#requirements)
 * [Creating Development Environment](#creating-development-environment)
-* [Installing Hazelcast DynaCache to Liberty](#installing-hazelcast-dynacache-to-liberty)
+* [Installing Hazelcast DynaCache on Liberty](#installing-hazelcast-dynacache-on-liberty)
 * [Enabling Hazelcast DynaCache](#enabling-hazelcast-dynacache)
 
 
@@ -25,46 +25,55 @@ This repository contains Hazelcast DynaCache feature for Liberty Profile.
 In Liberty WAS, you can use dynamic cache engine (which is the default) in order to cache your data.
 With this feature, you can use Hazelcast as cache provider.
 
-Tested with Liberty 16.0.0.3.
+The Liberty feature uses the IBM Distributed Map API and can run alongside Jakarta EE applications.
 
 # Requirements
     
 - Maven
-- Download and extract [Liberty 16.0.0.3](https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/wasdev/downloads/wlp/16.0.0.3/wlp-javaee7-16.0.0.3.zip)
+- Java 17 or later
+- A Liberty runtime with the Distributed Map and Jakarta Transactions features available
+- A Hazelcast 5.7 cluster. 
 
 # Creating Development Environment
 
 - Clone this GitHub repository: 
 
-    ```
-    git clone https://github.com/hazelcast/hazelcast-dynacache.git
-    ```
-
-- Execute `mvn clean package` on `hazelcast-dynacache` root directory to create the `.esa` file
-
-# Installing Hazelcast DynaCache to WebSphere Liberty
-
-Install the `.esa` file by executing the following command:
-
+```bash
+git clone https://github.com/hazelcast/hazelcast-dynacache.git
 ```
-<liberty dir>/bin/featureManager install hazelcast-dynacache/hazelcast-dynacache/target/hazelcast-dynacache-0.3.esa
-```    
 
-Use `hazelcast` as your cache provider name in your `cacheinstances.properties` file.
+- Run `mvn clean verify` from the repository root to run the tests and create
+  `hazelcast-dynacache/target/hazelcast-dynacache-0.3.esa`.
 
-# Enabling Hazelcast DynaCache on WebSphere Liberty
+# Installing Hazelcast DynaCache on Liberty
 
-Enable Hazelcast DynaCache by adding the following snippet to your `server.xml` file:
+On WebSphere Liberty, run the following from the repository root.
 
- ```
-  <featureManager>
+```sh
+<liberty dir>/bin/featureManager install hazelcast-dynacache/target/hazelcast-dynacache-0.3.esa
+```
+
+For a manual installation, extract the JARs from the ESA into `<liberty user dir>/extension/lib`.
+Save `OSGI-INF/SUBSYSTEM.MF` from the ESA as
+`<liberty user dir>/extension/lib/features/hazelcast-dynacache.mf`.
+The Liberty user directory defaults to `<liberty dir>/usr`.
+
+# Enabling Hazelcast DynaCache
+
+Enable the feature in `server.xml` and select the provider for your distributed map.
+
+ ```xml
+<featureManager>
     <feature>usr:hazelcast-dynacache</feature>
-  </featureManager>
+</featureManager>
+<distributedMap id="my-cache" jndiName="services/cache/my-cache" cacheProviderName="hazelcast"/>
  ```
- 
- 
+Set `-Dhazelcast.client.config=/path/to/hazelcast-client.xml` in the server's `jvm.options`
+to configure the cluster name and member addresses.
 
-# Installing Hazelcast DynaCache to Traditional WebSphere 9.0.0.1
+# Legacy installation on Traditional WebSphere 9.0.0.1
+
+These instructions apply to the earlier Hazelcast 3.11 build of this library.
 
 [Apply the iFix](http://www.ibm.com/support/knowledgecenter/SS7K4U_8.5.5/com.ibm.websphere.installation.nd.doc/ae/tins_install_fixes_dist.html)
  under `twas-ifix` directory to your WebSphere server and put the following files under `WAS_HOME/lib/ext`:
